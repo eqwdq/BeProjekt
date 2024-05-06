@@ -1,0 +1,10 @@
+{
+    "name": "backend/backend",
+    "description": "backend project",
+    "autoload": {
+        "psr-4": {
+            "Backend\\Backend\\": "src/"
+        }
+    },
+    "require": {}
+}
