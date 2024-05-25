@@ -2,45 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Administrator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class AdminRegistrationController extends Controller
 {
-    /**
-     * Show the administrator registration form.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function showRegistrationForm()
-    {
-        return view('admin.register');
-    }
-
-    /**
-     * Handle administrator registration form submission.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function register(Request $request)
     {
-        // Validate the form data
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:administrators'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        // Log the request data
+        Log::info('Request received to register admin', ['request' => $request->all()]);
+
+        // Validate the request data
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Create a new administrator record
-        Administrator::create([
+        // Return validation errors if any
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Create a new admin user
+        $admin = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
+            'is_admin' => true,
         ]);
 
-        // Redirect back to the registration form with success message
-        return redirect()->route('admin.register')->with('success', 'Administrator registered successfully!');
+        // Log success message
+        Log::info('Admin registered successfully', ['admin' => $admin]);
+
+        // Return success response
+        return response()->json(['message' => 'Admin registered successfully!', 'admin' => $admin], 201);
     }
 }
+
+
+
 
