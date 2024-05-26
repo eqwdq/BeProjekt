@@ -1,5 +1,3 @@
-<!-- resources/views/layouts/app.blade.php -->
-
 <!DOCTYPE html>
 <html lang="en" class="js">
 <head>
@@ -36,7 +34,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     
     <link href="{{ asset('css/color.css') }}" rel="stylesheet">
-    <script src="resources/js/app.js"></script>
+    <script src="{{ asset('resources/js/app.js') }}"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="{{ asset('js/html5shiv.js') }}"></script>
@@ -78,7 +76,7 @@
     ================================================== -->
     <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
 </body>
-
 </html>
+
 
      

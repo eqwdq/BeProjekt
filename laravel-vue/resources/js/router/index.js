@@ -6,7 +6,8 @@ import Partners from "../components/Partners.vue";
 import Contact from "../components/Contact.vue";
 import Registration from "../components/Registration.vue";
 import AdminRegistration from "../components/AdminRegistration.vue";
-import AdminLogin from "../components/AdminLogin.vue"; // Import the AdminLogin component
+import AdminLogin from "../components/AdminLogin.vue";
+import AdminAddSpeaker from "../components/AdminAddSpeaker.vue"; // Import the AdminAddSpeaker component
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,7 +19,7 @@ const router = createRouter({
         },
         {
             path: '/speakers',
-            name: 'speakers',
+            name: 'Speakers',
             component: Speakers
         },
         {
@@ -47,14 +48,20 @@ const router = createRouter({
             component: AdminRegistration
         },
         {
-            path: '/admin/login', // Add the route for AdminLogin
+            path: '/admin/login',
             name: 'admin-login',
             component: AdminLogin
+        },
+        {
+            path: '/admin/addspeaker', // Add the route for AdminAddSpeaker
+            name: 'admin-add-speaker',
+            component: AdminAddSpeaker
         }
     ]
 });
 
 export default router;
+
 
 
 
