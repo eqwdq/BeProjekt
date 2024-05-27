@@ -37,40 +37,40 @@
         </form>
         <br><br><br><br>
         <h3>Programs</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Day</th>
-            <th>Time</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Speaker</th>
-            <th>Speaker Link</th>
-            <th>Image</th>
-            <th>Actions</th> <!-- Add a table header for actions -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="program in programs" :key="program.id">
-            <td>{{ program.day }}</td>
-            <td>{{ program.time }}</td>
-            <td>{{ program.title }}</td>
-            <td>{{ program.description }}</td>
-            <td>{{ program.speaker }}</td>
-            <td>{{ program.speaker_link }}</td>
-            <td>
-              <img :src="program.image" alt="Program Image" style="max-width: 100px;">
-            </td>
-            <td> <!-- Add a table cell for buttons -->
-              <!-- Edit button -->
-              <router-link :to="{ name: 'admin-edit-program', params: { id: program.id } }" class="btn btn-warning">Edit</router-link>
-
-              <!-- Delete button -->
-              <button @click="deleteProgram(program)" class="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Time</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Speaker</th>
+              <th>Speaker Link</th>
+              <th>Image</th>
+              <th>Actions</th> <!-- Add a table header for actions -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="program in programs" :key="program.id">
+              <td>{{ program.day }}</td>
+              <td>{{ program.time }}</td>
+              <td>{{ program.title }}</td>
+              <td>{{ program.description }}</td>
+              <td>{{ program.speaker }}</td>
+              <td>{{ program.speaker_link }}</td>
+              <td>
+                <img :src="program.image" alt="Program Image" style="max-width: 100px;">
+              </td>
+              <td> <!-- Add a table cell for buttons -->
+                <!-- Edit button -->
+                <router-link :to="{ name: 'admin-edit-program', params: { id: program.id } }" class="btn btn-warning">Edit</router-link>
+  
+                <!-- Delete button -->
+                <button @click="deleteProgram(program)" class="btn btn-danger">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </template>
@@ -142,19 +142,16 @@
         }
       },
       fetchPrograms() {
-  // Fetch the list of programs from the server
-  axios.get('/api/admin/programs') // Update this to fetch a specific program by ID
-    .then(response => {
-      this.programs = response.data;
-    })
-    .catch(error => {
-      console.error('Error fetching programs:', error);
-    });
-}
-
+        axios.get('/api/admin/programs')
+          .then(response => {
+            this.programs = response.data;
+          })
+          .catch(error => {
+            console.error('Error fetching programs:', error);
+          });
+      }
     },
     created() {
-      // Fetch programs when the component is created
       this.fetchPrograms();
     }
   };
@@ -163,6 +160,10 @@
   <style scoped>
   /* Add your custom styles here */
   </style>
+  
+  
+  
+  
   
   
   

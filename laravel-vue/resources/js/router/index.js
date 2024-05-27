@@ -73,9 +73,10 @@ const router = createRouter({
           },
           {
             path: '/admin/programs/edit/:id',
-            name: 'AdminEditProgram',
-            component: AdminEditProgram
-          }
+            name: 'admin-edit-program',
+            component: AdminEditProgram,
+            props: true
+          },
     ]
 });
 

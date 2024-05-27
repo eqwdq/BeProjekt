@@ -84,7 +84,7 @@
                               <div class="row no-margin">
                                 <div class="col-sm-3 no-padding">
                                   <div class="schedule-img">
-                                    <img :src="session.image" alt="schedule" />
+                                    <img :src="'/storage/' + session.image" alt="schedule" />
                                   </div>
                                 </div>
                                 <div class="col-sm-9 no-padding">
@@ -114,6 +114,7 @@
 <script>
 import Header from './Header.vue';
 import Footer from './Footer.vue';
+import axios from 'axios';
 
 export default {
   name: 'Program',
@@ -125,29 +126,7 @@ export default {
     return {
       activeTab: 1,
       collapsed: {},
-      schedules: [
-        {
-          day: '24 DECEMBER',
-          sessions: [
-            { time: '10:00 AM', title: 'Opening Ceremony', description: 'Opening ceremony description', speaker: 'John Doe', speakerLink: 'https://example.com', image: 'path/to/image1.jpg' },
-            { time: '12:00 PM', title: 'Keynote', description: 'Keynote description', speaker: 'Jane Smith', speakerLink: 'https://example.com', image: 'path/to/image2.jpg' }
-          ]
-        },
-        {
-          day: '25 DECEMBER',
-          sessions: [
-            { time: '10:00 AM', title: 'Workshop 1', description: 'Workshop 1 description', speaker: 'John Doe', speakerLink: 'https://example.com', image: 'path/to/image1.jpg' },
-            { time: '12:00 PM', title: 'Workshop 2', description: 'Workshop 2 description', speaker: 'Jane Smith', speakerLink: 'https://example.com', image: 'path/to/image2.jpg' }
-          ]
-        },
-        {
-          day: '26 DECEMBER',
-          sessions: [
-            { time: '10:00 AM', title: 'Panel Discussion', description: 'Panel Discussion description', speaker: 'John Doe', speakerLink: 'https://example.com', image: 'path/to/image1.jpg' },
-            { time: '12:00 PM', title: 'Closing Ceremony', description: 'Closing ceremony description', speaker: 'Jane Smith', speakerLink: 'https://example.com', image: 'path/to/image2.jpg' }
-          ]
-        }
-      ]
+      schedules: []
     };
   },
   methods: {
@@ -168,7 +147,34 @@ export default {
     },
     isCollapsed(dayIndex, sessionIndex) {
       return this.collapsed[dayIndex] && this.collapsed[dayIndex][sessionIndex];
+    },
+    async fetchPrograms() {
+      try {
+        const response = await axios.get('/api/admin/programs');
+        const programs = response.data;
+        this.schedules = this.formatProgramsToSchedules(programs);
+      } catch (error) {
+        console.error('Error fetching programs:', error);
+      }
+    },
+    formatProgramsToSchedules(programs) {
+      const groupedByDay = programs.reduce((acc, program) => {
+        const { day } = program;
+        if (!acc[day]) {
+          acc[day] = [];
+        }
+        acc[day].push(program);
+        return acc;
+      }, {});
+
+      return Object.keys(groupedByDay).map(day => ({
+        day,
+        sessions: groupedByDay[day]
+      }));
     }
+  },
+  async mounted() {
+    await this.fetchPrograms();
   }
 };
 </script>
@@ -176,6 +182,7 @@ export default {
 <style scoped>
 /* Add your custom styles here */
 </style>
+
 
   
   
