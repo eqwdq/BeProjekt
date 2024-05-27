@@ -1,3 +1,4 @@
+// resources/js/components/Speakers.vue
 <template>
 	<div>
 	  <Header />

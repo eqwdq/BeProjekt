@@ -1,9 +1,9 @@
-// resources/js/components/AddSpeaker.vue
 <template>
   <div>
     <AdminHeader />
     <div class="container">
-      <h3>Add New Speaker</h3>
+      <br><br><br><br>
+      <h3>Add New Speaker</h3><br><br><br><br>
       <form @submit.prevent="onSubmit" enctype="multipart/form-data">
         <div class="form-group">
           <label for="speakerName">Name:</label>
@@ -27,6 +27,40 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+      <br><br><br><br><br><br><br><br>
+      <!-- Table to display speakers -->
+      <h3>Speakers</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Instagram</th>
+            <th>YouTube</th>
+            <th>Image</th>
+            <th>Actions</th> <!-- Add a table header for actions -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="speaker in speakers" :key="speaker.id">
+            <td>{{ speaker.name }}</td>
+            <td>{{ speaker.description }}</td>
+            <td>{{ speaker.instagram }}</td>
+            <td>{{ speaker.youtube }}</td>
+            <td>
+              <img :src="speaker.image" alt="Speaker Image" style="max-width: 100px;">
+            </td>
+            <td> <!-- Add a table cell for buttons -->
+              <!-- Edit button -->
+              <router-link :to="{ name: 'admin-edit-speaker', params: { id: speaker.id } }" class="btn btn-warning">Edit</router-link>
+
+
+              <!-- Delete button -->
+              <button @click="deleteSpeaker(speaker)" class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -47,7 +81,8 @@ export default {
         image: null,
         instagram: '',
         youtube: ''
-      }
+      },
+      speakers: []
     };
   },
   methods: {
@@ -70,19 +105,53 @@ export default {
           this.newSpeaker.image = null;
           this.newSpeaker.instagram = '';
           this.newSpeaker.youtube = '';
+
+          // Refresh the list of speakers
+          this.fetchSpeakers();
         })
         .catch(error => {
           console.error('Error adding speaker:', error);
         });
+    },
+    deleteSpeaker(speaker) {
+      if (confirm("Are you sure you want to delete this speaker?")) {
+        axios.delete(`/admin/speakers/${speaker.id}`)
+          .then(() => {
+            // Refresh the list of speakers after deletion
+            this.fetchSpeakers();
+          })
+          .catch(error => {
+            console.error('Error deleting speaker:', error);
+          });
+      }
+    },
+    fetchSpeakers() {
+      // Fetch the list of speakers from the server
+      axios.get('/api/admin/speakers')
+        .then(response => {
+          this.speakers = response.data;
+        })
+        .catch(error => {
+          console.error('Error fetching speakers:', error);
+        });
     }
+  },
+  created() {
+    // Fetch speakers when the component is created
+    this.fetchSpeakers();
   }
 };
-
 </script>
 
 <style scoped>
 /* Add your custom styles here */
 </style>
+
+<style scoped>
+/* Add your custom styles here */
+</style>
+
+
 
 
   

@@ -32,12 +32,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <router-link class="navbar-brand" to="/"><img src="images/logo.png" alt="Site Logo" /></router-link>
+              
             </div>
   
             <div class="collapse navbar-collapse" id="navbar-collapse">
               <ul class="nav navbar-nav navbar-right">
-                <li :class="{ current: isActive('/speakers') }"><router-link to="/speakers">Speakers</router-link></li>
+                <li :class="{ current: isActive('/admin/addspeaker') }"><router-link to="/admin/addspeaker">Speakers</router-link></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container -->

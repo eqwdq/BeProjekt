@@ -7,7 +7,8 @@ import Contact from "../components/Contact.vue";
 import Registration from "../components/Registration.vue";
 import AdminRegistration from "../components/AdminRegistration.vue";
 import AdminLogin from "../components/AdminLogin.vue";
-import AdminAddSpeaker from "../components/AdminAddSpeaker.vue"; // Import the AdminAddSpeaker component
+import AdminAddSpeaker from "../components/AdminAddSpeaker.vue";
+import AdminEditSpeaker from "../components/AdminEditSpeaker.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,14 +54,21 @@ const router = createRouter({
             component: AdminLogin
         },
         {
-            path: '/admin/addspeaker', // Add the route for AdminAddSpeaker
+            path: '/admin/addspeaker',
             name: 'admin-add-speaker',
             component: AdminAddSpeaker
+        },
+        {
+            path: '/admin/editspeaker/:id', 
+            name: 'admin-edit-speaker',
+            component: AdminEditSpeaker,
+            props: true 
         }
     ]
 });
 
 export default router;
+
 
 
 
