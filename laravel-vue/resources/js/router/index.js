@@ -9,6 +9,8 @@ import AdminRegistration from "../components/AdminRegistration.vue";
 import AdminLogin from "../components/AdminLogin.vue";
 import AdminAddSpeaker from "../components/AdminAddSpeaker.vue";
 import AdminEditSpeaker from "../components/AdminEditSpeaker.vue";
+import AdminAddProgram from '../components/AdminAddProgram.vue';
+import AdminEditProgram from '../components/AdminEditProgram.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,7 +65,17 @@ const router = createRouter({
             name: 'admin-edit-speaker',
             component: AdminEditSpeaker,
             props: true 
-        }
+        },
+        {
+            path: '/admin/programs/add',
+            name: 'AdminAddProgram',
+            component: AdminAddProgram
+          },
+          {
+            path: '/admin/programs/edit/:id',
+            name: 'AdminEditProgram',
+            component: AdminEditProgram
+          }
     ]
 });
 
