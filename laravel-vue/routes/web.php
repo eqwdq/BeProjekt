@@ -6,8 +6,8 @@ use App\Http\Controllers\AdminRegistrationController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\SponsorController;
 
-// Define API routes or other server-side routes here
 
 Route::get('/{any}', function () {
     return view('app');
@@ -30,6 +30,10 @@ Route::delete('/admin/programs/{program}', [ProgramController::class, 'destroy']
 
 Route::post('/admin/gallery', [GalleryController::class, 'store']);
 Route::get('/api/gallery', [GalleryController::class, 'index']);
+
+Route::post('/admin/sponsors', [SponsorController::class, 'store']);
+Route::get('/api/sponsors', [SponsorController::class, 'index']);
+
 
 
 
