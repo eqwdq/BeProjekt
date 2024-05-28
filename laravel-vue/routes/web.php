@@ -5,6 +5,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\AdminRegistrationController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\SpeakerController;
+use App\Http\Controllers\GalleryController;
 
 // Define API routes or other server-side routes here
 
@@ -27,6 +28,8 @@ Route::post('/admin/programs', [ProgramController::class, 'store']);
 Route::put('/api/admin/programs/{program}', [ProgramController::class, 'update']);
 Route::delete('/admin/programs/{program}', [ProgramController::class, 'destroy']);
 
+Route::post('/admin/gallery', [GalleryController::class, 'store']);
+Route::get('/api/gallery', [GalleryController::class, 'index']);
 
 
 

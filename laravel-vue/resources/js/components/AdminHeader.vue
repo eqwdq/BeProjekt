@@ -39,6 +39,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li :class="{ current: isActive('/admin/addspeaker') }"><router-link to="/admin/addspeaker">Speakers</router-link></li>
                 <li :class="{ current: isActive('/admin/programs/add') }"><router-link to="/admin/programs/add">Programs</router-link></li>
+                <li :class="{ current: isActive('/admin/gallery/add') }"><router-link to="/admin/gallery/add">Galleries</router-link></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container -->

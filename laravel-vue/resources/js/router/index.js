@@ -11,6 +11,8 @@ import AdminAddSpeaker from "../components/AdminAddSpeaker.vue";
 import AdminEditSpeaker from "../components/AdminEditSpeaker.vue";
 import AdminAddProgram from '../components/AdminAddProgram.vue';
 import AdminEditProgram from '../components/AdminEditProgram.vue';
+import Gallery from '../components/Gallery.vue';
+import AdminAddGallery from '../components/AdminAddGallery.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -77,6 +79,16 @@ const router = createRouter({
             component: AdminEditProgram,
             props: true
           },
+          {
+            path: '/gallery', 
+            name: 'Gallery',
+            component: Gallery
+        },
+        {
+            path: '/admin/gallery/add', 
+            name: 'AdminAddGallery',
+            component: AdminAddGallery
+        },
     ]
 });
 

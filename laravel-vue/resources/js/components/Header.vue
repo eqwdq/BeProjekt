@@ -41,9 +41,11 @@
               <li :class="{ current: isActive('/') }"><router-link to="/">Home</router-link></li>
               <li :class="{ current: isActive('/speakers') }"><router-link to="/speakers">Speakers</router-link></li>
               <li :class="{ current: isActive('/Program') }"><router-link to="/Program">Program</router-link></li>
+              <li :class="{ current: isActive('/gallery') }"><router-link to="/gallery">Galéria</router-link></li>
               <li :class="{ current: isActive('/partneri') }"><router-link to="/partneri">Partneri</router-link></li>
               <li :class="{ current: isActive('/contact') }"><router-link to="/contact">Contact</router-link></li>
               <li :class="{ current: isActive('/registracia') }"><router-link to="/registracia">Registrácia</router-link></li>
+              
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container -->
