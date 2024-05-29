@@ -1,6 +1,5 @@
 <?php
 
-// app/Http/Controllers/ProgramController.php
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -18,7 +17,8 @@ class ProgramController extends Controller
             'day' => 'required|string|max:255',
             'time' => 'required|string|max:255',
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'short_description' => 'required|string',
+            'long_description' => 'required|string',
             'speaker' => 'required|string|max:255',
             'speaker_link' => 'nullable|url',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -35,7 +35,8 @@ class ProgramController extends Controller
             'day' => $request->day,
             'time' => $request->time,
             'title' => $request->title,
-            'description' => $request->description,
+            'short_description' => $request->short_description,
+            'long_description' => $request->long_description,
             'speaker' => $request->speaker,
             'speaker_link' => $request->speaker_link,
             'image' => $imagePath,
@@ -56,41 +57,61 @@ class ProgramController extends Controller
     }
 
     public function update(Request $request, Program $program)
-    {
-        $validator = Validator::make($request->all(), [
-            'day' => 'required|string|max:255',
-            'time' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'speaker' => 'required|string|max:255',
-            'speaker_link' => 'nullable|url',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+{
+    Log::info('Request data: ', $request->all());
 
-        if ($validator->fails()) {
-            Log::error('Validation errors: ', $validator->errors()->toArray());
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+    $validator = Validator::make($request->all(), [
+        'day' => 'nullable|string|max:255',
+        'time' => 'nullable|string|max:255',
+        'title' => 'nullable|string|max:255',
+        'short_description' => 'nullable|string',
+        'long_description' => 'nullable|string',
+        'speaker' => 'nullable|string|max:255',
+        'speaker_link' => 'nullable|url',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        $program->day = $request->day;
-        $program->time = $request->time;
-        $program->title = $request->title;
-        $program->description = $request->description;
-        $program->speaker = $request->speaker;
-        $program->speaker_link = $request->speaker_link;
-
-        if ($request->hasFile('image')) {
-            if ($program->image) {
-                Storage::disk('public')->delete($program->image);
-            }
-            $imagePath = $request->file('image')->store('images', 'public');
-            $program->image = $imagePath;
-        }
-
-        $program->save();
-
-        return response()->json($program);
+    if ($validator->fails()) {
+        Log::error('Validation errors: ', $validator->errors()->toArray());
+        return response()->json(['errors' => $validator->errors()], 422);
     }
+
+    if ($request->has('day')) {
+        $program->day = $request->day;
+    }
+    if ($request->has('time')) {
+        $program->time = $request->time;
+    }
+    if ($request->has('title')) {
+        $program->title = $request->title;
+    }
+    if ($request->has('short_description')) {
+        $program->short_description = $request->short_description;
+    }
+    if ($request->has('long_description')) {
+        $program->long_description = $request->long_description;
+    }
+    if ($request->has('speaker')) {
+        $program->speaker = $request->speaker;
+    }
+    if ($request->has('speaker_link')) {
+        $program->speaker_link = $request->speaker_link;
+    }
+
+    if ($request->hasFile('image')) {
+        if ($program->image) {
+            Storage::disk('public')->delete($program->image);
+        }
+        $imagePath = $request->file('image')->store('images', 'public');
+        $program->image = $imagePath;
+    }
+
+    $program->save();
+
+    return response()->json($program);
+}
+
+
 
     public function destroy(Program $program)
     {
@@ -103,6 +124,11 @@ class ProgramController extends Controller
         return response()->json(null, 204);
     }
 }
+
+
+
+
+
 
 
 

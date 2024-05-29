@@ -1,9 +1,11 @@
 <?php
 
+// app/Http/Controllers/AdminLoginController.php
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AdminLoginController extends Controller
 {
@@ -18,10 +20,14 @@ class AdminLoginController extends Controller
         // Attempt to authenticate the admin
         if (Auth::attempt($credentials)) {
             // Authentication successful
-            return response()->json(['message' => 'Admin logged in successfully!', 'admin' => Auth::user()], 200);
+            $user = Auth::user();
+            $token = $user->createToken('admin-token')->plainTextToken;
+
+            return response()->json(['message' => 'Admin logged in successfully!', 'admin' => $user, 'token' => $token], 200);
         } else {
             // Authentication failed
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
     }
 }
+

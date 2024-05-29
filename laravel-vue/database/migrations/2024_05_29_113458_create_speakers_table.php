@@ -16,7 +16,8 @@ class CreateSpeakersTable extends Migration
         Schema::create('speakers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
+            $table->text('short_description'); // Adding short description
+            $table->text('long_description');  // Adding long description
             $table->string('image')->nullable(); 
             $table->string('instagram')->nullable();
             $table->string('youtube')->nullable();
@@ -34,4 +35,3 @@ class CreateSpeakersTable extends Migration
         Schema::dropIfExists('speakers');
     }
 }
-

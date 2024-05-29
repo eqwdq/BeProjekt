@@ -13,10 +13,11 @@ class CreateProgramsTable extends Migration
             $table->string('day');
             $table->string('time');
             $table->string('title');
-            $table->text('description');
+            $table->text('short_description'); // Adding short description
+            $table->text('long_description');  // Adding long description
             $table->string('speaker');
-            $table->string('speaker_link');
-            $table->string('image');
+            $table->string('speaker_link')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

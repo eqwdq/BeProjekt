@@ -11,7 +11,7 @@ class Speaker extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'image', 'instagram', 'youtube'];
+    protected $fillable = ['name', 'short_description', 'long_description', 'image', 'instagram', 'youtube'];
 }
 
 

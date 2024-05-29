@@ -10,8 +10,12 @@
           <input type="text" class="form-control" id="speakerName" v-model="newSpeaker.name" required>
         </div>
         <div class="form-group">
-          <label for="speakerDescription">Description:</label>
-          <textarea class="form-control" id="speakerDescription" v-model="newSpeaker.description" required></textarea>
+          <label for="speakerShortDescription">Short Description:</label>
+          <textarea class="form-control" id="speakerShortDescription" v-model="newSpeaker.short_description" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="speakerLongDescription">Long Description:</label>
+          <textarea class="form-control" id="speakerLongDescription" v-model="newSpeaker.long_description" required></textarea>
         </div>
         <div class="form-group">
           <label for="speakerImage">Image:</label>
@@ -34,7 +38,8 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Description</th>
+            <th>Short Description</th>
+            <th>Long Description</th>
             <th>Instagram</th>
             <th>YouTube</th>
             <th>Image</th>
@@ -44,7 +49,8 @@
         <tbody>
           <tr v-for="speaker in speakers" :key="speaker.id">
             <td>{{ speaker.name }}</td>
-            <td>{{ speaker.description }}</td>
+            <td>{{ speaker.short_description }}</td>
+            <td>{{ speaker.long_description }}</td>
             <td>{{ speaker.instagram }}</td>
             <td>{{ speaker.youtube }}</td>
             <td>
@@ -53,7 +59,6 @@
             <td> <!-- Add a table cell for buttons -->
               <!-- Edit button -->
               <router-link :to="{ name: 'admin-edit-speaker', params: { id: speaker.id } }" class="btn btn-warning">Edit</router-link>
-
 
               <!-- Delete button -->
               <button @click="deleteSpeaker(speaker)" class="btn btn-danger">Delete</button>
@@ -77,7 +82,8 @@ export default {
     return {
       newSpeaker: {
         name: '',
-        description: '',
+        short_description: '',
+        long_description: '',
         image: null,
         instagram: '',
         youtube: ''
@@ -92,7 +98,8 @@ export default {
     onSubmit() {
       const formData = new FormData();
       formData.append('name', this.newSpeaker.name);
-      formData.append('description', this.newSpeaker.description);
+      formData.append('short_description', this.newSpeaker.short_description);
+      formData.append('long_description', this.newSpeaker.long_description);
       formData.append('image', this.newSpeaker.image);
       formData.append('instagram', this.newSpeaker.instagram);
       formData.append('youtube', this.newSpeaker.youtube);
@@ -101,7 +108,8 @@ export default {
         .then(() => {
           // Clear form fields or perform other actions
           this.newSpeaker.name = '';
-          this.newSpeaker.description = '';
+          this.newSpeaker.short_description = '';
+          this.newSpeaker.long_description = '';
           this.newSpeaker.image = null;
           this.newSpeaker.instagram = '';
           this.newSpeaker.youtube = '';
@@ -147,9 +155,6 @@ export default {
 /* Add your custom styles here */
 </style>
 
-<style scoped>
-/* Add your custom styles here */
-</style>
 
 
 

@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="schedule-area page-section gray-bg">
         <div class="container">
           <div class="schedules">
@@ -28,22 +28,15 @@
                 </div>
                 <div class="schedule-date">
                   <ul class="nav nav-tabs" role="tablist">
-                    <li :class="{ active: isActiveTab(1) }" @click="setActiveTab(1)">
+                    <li
+                      v-for="(schedule, index) in schedules"
+                      :key="index"
+                      :class="{ active: isActiveTab(index + 1) }"
+                      @click="setActiveTab(index + 1)"
+                    >
                       <a href="#">
-                        <h4>Day 1</h4>
-                        <h5>24 DECEMBER</h5>
-                      </a>
-                    </li>
-                    <li :class="{ active: isActiveTab(2) }" @click="setActiveTab(2)">
-                      <a href="#">
-                        <h4>Day 2</h4>
-                        <h5>25 DECEMBER</h5>
-                      </a>
-                    </li>
-                    <li :class="{ active: isActiveTab(3) }" @click="setActiveTab(3)">
-                      <a href="#">
-                        <h4>Day 3</h4>
-                        <h5>26 DECEMBER</h5>
+                        <h4>{{ schedule.day }}</h4>
+                        <h5>{{ schedule.sessions[0].title }}</h5>
                       </a>
                     </li>
                   </ul>
@@ -62,9 +55,17 @@
                     </div>
                   </div>
                   <div class="tab-content">
-                    <div v-for="(schedule, dayIndex) in schedules" :key="dayIndex" v-show="isActiveTab(dayIndex + 1)">
+                    <div
+                      v-for="(schedule, dayIndex) in schedules"
+                      :key="dayIndex"
+                      v-show="isActiveTab(dayIndex + 1)"
+                    >
                       <div class="panel-group" role="tablist">
-                        <div v-for="(session, sessionIndex) in schedule.sessions" :key="sessionIndex" class="single-schedule panel panel-default">
+                        <div
+                          v-for="(session, sessionIndex) in schedule.sessions"
+                          :key="sessionIndex"
+                          class="single-schedule panel panel-default"
+                        >
                           <div class="panel-heading" role="tab">
                             <div class="panel-title single-schedule-title">
                               <a @click="toggleCollapse(dayIndex, sessionIndex)">
@@ -79,7 +80,11 @@
                               </a>
                             </div>
                           </div>
-                          <div v-show="!isCollapsed(dayIndex, sessionIndex)" class="panel-collapse collapse in" role="tabpanel">
+                          <div
+                            v-show="!isCollapsed(dayIndex, sessionIndex)"
+                            class="panel-collapse collapse in"
+                            role="tabpanel"
+                          >
                             <div class="panel-body">
                               <div class="row no-margin">
                                 <div class="col-sm-3 no-padding">
@@ -89,23 +94,36 @@
                                 </div>
                                 <div class="col-sm-9 no-padding">
                                   <div class="schedule-info">
-                                    <p>{{ session.description }}</p>
-                                    <h5><span>With</span> : {{ session.speaker }} <small>Designer at <a :href="session.speakerLink">Google</a></small></h5>
+                                    <p><strong>Short Description:</strong> {{ session.short_description }}</p><br>
+                                    <p><strong>Long Description:</strong> {{ session.long_description }}</p>
+                                    <h5><br>
+                                      <span>Speaker</span> : {{ session.speaker }}
+                                    </h5><br><br><br>
+                                    <a :href="session.speaker_link">Link</a>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div><!-- /.single-schedule -->
-                      </div><!-- /.panel-group -->
-                    </div><!-- /.tab-pane -->
-                  </div><!-- /.tab-content -->
-                </div><!-- /.schedule-details -->
-              </div><!-- /.col -->
-            </div><!-- /.row -->
-          </div><!-- /.schedules -->
+                        </div>
+                        <!-- /.single-schedule -->
+                      </div>
+                      <!-- /.panel-group -->
+                    </div>
+                    <!-- /.tab-pane -->
+                  </div>
+                  <!-- /.tab-content -->
+                </div>
+                <!-- /.schedule-details -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.schedules -->
         </div>
-      </div><!-- /.schedule-area -->
+      </div>
+      <!-- /.schedule-area -->
     </div>
     <Footer />
   </div>
@@ -182,6 +200,9 @@ export default {
 <style scoped>
 /* Add your custom styles here */
 </style>
+
+
+
 
 
   

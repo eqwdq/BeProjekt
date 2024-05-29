@@ -10,9 +10,17 @@ class Program extends Model
     use HasFactory;
 
     protected $fillable = [
-        'day', 'time', 'title', 'description', 'speaker', 'speaker_link', 'image'
+        'day', 
+        'time', 
+        'title', 
+        'short_description', 
+        'long_description', 
+        'speaker', 
+        'speaker_link', 
+        'image'
     ];
 }
+
 
 
 

@@ -10,8 +10,12 @@
           <input type="text" class="form-control" id="speakerName" v-model="editedSpeaker.name" required>
         </div>
         <div class="form-group">
-          <label for="speakerDescription">Description:</label>
-          <textarea class="form-control" id="speakerDescription" v-model="editedSpeaker.description" required></textarea>
+          <label for="speakerShortDescription">Short Description:</label>
+          <textarea class="form-control" id="speakerShortDescription" v-model="editedSpeaker.short_description" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="speakerLongDescription">Long Description:</label>
+          <textarea class="form-control" id="speakerLongDescription" v-model="editedSpeaker.long_description" required></textarea>
         </div>
         <div class="form-group">
           <label for="speakerImage">Image:</label>
@@ -44,7 +48,8 @@ export default {
       editedSpeaker: {
         id: null,
         name: '',
-        description: '',
+        short_description: '',
+        long_description: '',
         image: null,
         instagram: '',
         youtube: ''
@@ -59,7 +64,8 @@ export default {
       try {
         const formData = new FormData();
         formData.append('name', this.editedSpeaker.name);
-        formData.append('description', this.editedSpeaker.description);
+        formData.append('short_description', this.editedSpeaker.short_description);
+        formData.append('long_description', this.editedSpeaker.long_description);
         if (this.editedSpeaker.image) {
           formData.append('image', this.editedSpeaker.image);
         }
@@ -97,6 +103,9 @@ export default {
 <style scoped>
 /* Add your custom styles here */
 </style>
+
+
+
 
 
   

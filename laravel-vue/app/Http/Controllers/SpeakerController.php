@@ -13,7 +13,8 @@ class SpeakerController extends Controller
         // Validate the request data
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'short_description' => 'required|string',
+            'long_description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'instagram' => 'nullable|url',
             'youtube' => 'nullable|url',
@@ -28,7 +29,8 @@ class SpeakerController extends Controller
         // Create a new speaker
         $speaker = Speaker::create([
             'name' => $request->name,
-            'description' => $request->description,
+            'short_description' => $request->short_description,
+            'long_description' => $request->long_description,
             'image' => $imagePath,
             'instagram' => $request->instagram,
             'youtube' => $request->youtube,
@@ -40,66 +42,66 @@ class SpeakerController extends Controller
     public function index()
     {
         $speakers = Speaker::all();
-        \Log::info($speakers); // This will log the speakers data in storage/logs/laravel.log
         return response()->json($speakers);
     }
+
     public function update(Request $request, Speaker $speaker)
-{
-    // Log the request data for debugging
-    \Log::info('Request data:', $request->all());
+    {
+        // Log the request data for debugging
+        \Log::info('Request data:', $request->all());
 
-    // Validate the request data
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'instagram' => 'nullable|url',
-        'youtube' => 'nullable|url',
-    ]);
+        // Validate the request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'short_description' => 'required|string',
+            'long_description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'instagram' => 'nullable|url',
+            'youtube' => 'nullable|url',
+        ]);
 
-    // Update speaker data
-    $speaker->name = $request->name;
-    $speaker->description = $request->description;
-    $speaker->instagram = $request->instagram;
-    $speaker->youtube = $request->youtube;
+        // Update speaker data
+        $speaker->name = $request->name;
+        $speaker->short_description = $request->short_description;
+        $speaker->long_description = $request->long_description;
+        $speaker->instagram = $request->instagram;
+        $speaker->youtube = $request->youtube;
 
-    // Handle image update
-    if ($request->hasFile('image')) {
-        // Delete old image if exists
-        if ($speaker->image) {
-            Storage::disk('public')->delete($speaker->image);
+        // Handle image update
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($speaker->image) {
+                Storage::disk('public')->delete($speaker->image);
+            }
+            // Store new image
+            $imagePath = $request->file('image')->store('images', 'public');
+            $speaker->image = $imagePath;
         }
-        // Store new image
-        $imagePath = $request->file('image')->store('images', 'public');
-        $speaker->image = $imagePath;
+
+        $speaker->save();
+
+        return response()->json($speaker);
     }
 
-    $speaker->save();
-
-    return response()->json($speaker);
-}
-
-
-    
-
-
-public function show(Speaker $speaker)
+    public function show(Speaker $speaker)
     {
         return response()->json($speaker);
     }
 
-public function destroy(Speaker $speaker)
-{
-    // Delete the speaker
-    if ($speaker->image) {
-        Storage::disk('public')->delete($speaker->image);
+    public function destroy(Speaker $speaker)
+    {
+        // Delete the speaker
+        if ($speaker->image) {
+            Storage::disk('public')->delete($speaker->image);
+        }
+        $speaker->delete();
+
+        return response()->json(null, 204);
     }
-    $speaker->delete();
-
-    return response()->json(null, 204);
 }
 
-}
+
+
 
 
 
