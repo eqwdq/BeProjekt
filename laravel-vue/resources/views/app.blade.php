@@ -32,9 +32,11 @@
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/font.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    
     <link href="{{ asset('css/color.css') }}" rel="stylesheet">
-    <script src="{{ asset('resources/js/app.js') }}"></script>
+
+    <!-- Include Vite CSS and JavaScript -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="{{ asset('js/html5shiv.js') }}"></script>
@@ -46,37 +48,27 @@
 
     <!-- Load your Vue application JavaScript bundle -->
     @vite('resources/js/app.js')
- <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <!-- Bootstrap core JavaScript -->
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 
-    <!-- jQuery Magnific-Popup
-    ================================================== -->
+    <!-- jQuery Magnific-Popup -->
     <script src="{{ asset('lib/Magnific-Popup/dist/jquery.magnific-popup.min.js') }}"></script>
 
-    <!-- Select2
-    ================================================== -->
+    <!-- Select2 -->
     <script src="{{ asset('lib/select2/js/select2.min.js') }}"></script>
 
-    <!-- jQuery BxSlider
-    ================================================== -->
+    <!-- jQuery BxSlider -->
     <script src="{{ asset('lib/BxSlider/jquery.bxslider.min.js') }}"></script>
 
-    <!-- jQuery plyr
-    ================================================== -->
+    <!-- jQuery plyr -->
     <script src="{{ asset('lib/plyr/dist/plyr.js') }}"></script>
 
-    <!-- Google Map
-    ================================================== -->
+    <!-- Google Map -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 
-    <!-- jQuery Custom
-    ================================================== -->
+    <!-- jQuery Custom -->
     <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
 </body>
 </html>
-
-
-     

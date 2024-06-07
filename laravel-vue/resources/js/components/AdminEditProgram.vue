@@ -116,7 +116,7 @@ export default {
           console.log(`${key}: ${value}`);
         }
 
-        await axios.post('/admin/programs', formData);
+        await axios.post('/api/admin/programs', formData);
         alert("Program saved successfully");
         this.$router.push({ name: 'AdminAddProgram' });
       } catch (error) {
@@ -129,6 +129,8 @@ export default {
     async updateData() {
       try {
         const formData = new FormData();
+        formData.append('_method', 'PUT'); // Include the PUT method for Laravel
+
         if (this.program.day) formData.append('day', this.program.day);
         if (this.program.time) formData.append('time', this.program.time);
         if (this.program.title) formData.append('title', this.program.title);
@@ -143,7 +145,7 @@ export default {
           console.log(`${key}: ${value}`);
         }
 
-        const response = await axios.put(`/api/admin/programs/${this.program.id}`, formData, {
+        const response = await axios.post(`/api/admin/programs/${this.program.id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -164,10 +166,13 @@ export default {
 };
 </script>
 
-
 <style scoped>
 /* Add your custom styles here */
+.text-danger {
+  color: red;
+}
 </style>
+
 
 
 

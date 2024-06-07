@@ -38,7 +38,7 @@
           <input type="file" class="form-control" id="programImage" @change="onFileChange">
         </div>
         <br><br><br><br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary purple-button">Submit</button>
       </form>
       <br><br><br><br>
       <h3>Programs</h3>
@@ -69,7 +69,7 @@
               <img :src="program.image" alt="Program Image" style="max-width: 100px;">
             </td>
             <td>
-              <router-link :to="{ name: 'admin-edit-program', params: { id: program.id } }" class="btn btn-warning">Edit</router-link>
+              <router-link :to="{ name: 'admin-edit-program', params: { id: program.id } }" class="btn btn-warning purple-button">Edit</router-link>
               <button @click="deleteProgram(program)" class="btn btn-danger">Delete</button>
             </td>
           </tr>
@@ -103,65 +103,75 @@ export default {
     };
   },
   methods: {
-  onFileChange(e) {
-    this.newProgram.image = e.target.files[0];
-  },
-  async onSubmit() {
-    const formData = new FormData();
-    formData.append('day', this.newProgram.day);
-    formData.append('time', this.newProgram.time);
-    formData.append('title', this.newProgram.title);
-    formData.append('short_description', this.newProgram.short_description);
-    formData.append('long_description', this.newProgram.long_description);
-    formData.append('speaker', this.newProgram.speaker);
-    formData.append('speaker_link', this.newProgram.speaker_link);
-    formData.append('image', this.newProgram.image);
+    onFileChange(e) {
+      this.newProgram.image = e.target.files[0];
+    },
+    async onSubmit() {
+      const formData = new FormData();
+      formData.append('day', this.newProgram.day);
+      formData.append('time', this.newProgram.time);
+      formData.append('title', this.newProgram.title);
+      formData.append('short_description', this.newProgram.short_description);
+      formData.append('long_description', this.newProgram.long_description);
+      formData.append('speaker', this.newProgram.speaker);
+      formData.append('speaker_link', this.newProgram.speaker_link);
+      formData.append('image', this.newProgram.image);
 
-    try {
-      await axios.post('/admin/programs', formData);
-      this.newProgram = {
-        day: '',
-        time: '',
-        title: '',
-        short_description: '',
-        long_description: '',
-        speaker: '',
-        speaker_link: '',
-        image: null
-      };
-      this.fetchPrograms(); // Fetch updated list after submission
-    } catch (error) {
-      console.error('Error adding program:', error);
-    }
-  },
-  async deleteProgram(program) {
-    if (confirm("Are you sure you want to delete this program?")) {
       try {
-        await axios.delete(`/admin/programs/${program.id}`);
-        this.fetchPrograms(); // Fetch updated list after deletion
+        await axios.post('/admin/programs', formData);
+        this.newProgram = {
+          day: '',
+          time: '',
+          title: '',
+          short_description: '',
+          long_description: '',
+          speaker: '',
+          speaker_link: '',
+          image: null
+        };
+        this.fetchPrograms(); // Fetch updated list after submission
       } catch (error) {
-        console.error('Error deleting program:', error);
+        console.error('Error adding program:', error);
+      }
+    },
+    async deleteProgram(program) {
+      if (confirm("Are you sure you want to delete this program?")) {
+        try {
+          await axios.delete(`/admin/programs/${program.id}`);
+          this.fetchPrograms(); // Fetch updated list after deletion
+        } catch (error) {
+          console.error('Error deleting program:', error);
+        }
+      }
+    },
+    async fetchPrograms() {
+      try {
+        const response = await axios.get('/api/admin/programs');
+        this.programs = response.data;
+      } catch (error) {
+        console.error('Error fetching programs:', error);
       }
     }
   },
-  async fetchPrograms() {
-    try {
-      const response = await axios.get('/api/admin/programs');
-      this.programs = response.data;
-    } catch (error) {
-      console.error('Error fetching programs:', error);
-    }
+  created() {
+    this.fetchPrograms(); // Fetch programs when component is created
   }
-},
-created() {
-  this.fetchPrograms(); // Fetch programs when component is created
-}
 };
 </script>
 
 <style scoped>
 /* Add your custom styles here */
+.purple-button {
+  background-color: rgb(139, 72, 247);
+  border-color: purple;
+}
+
+.purple-button:hover {
+  background-color: rgb(139, 72, 247);
+  border-color: rgb(185, 60, 238);
+}
 </style>
+
 
 
 

@@ -7,27 +7,33 @@
       <form @submit.prevent="onSubmit" enctype="multipart/form-data">
         <div class="form-group">
           <label for="speakerName">Name:</label>
-          <input type="text" class="form-control" id="speakerName" v-model="editedSpeaker.name" required>
+          <input type="text" class="form-control" id="speakerName" v-model="editedSpeaker.name">
+          <span v-if="errors.name" class="text-danger">{{ errors.name[0] }}</span>
         </div>
         <div class="form-group">
           <label for="speakerShortDescription">Short Description:</label>
-          <textarea class="form-control" id="speakerShortDescription" v-model="editedSpeaker.short_description" required></textarea>
+          <textarea class="form-control" id="speakerShortDescription" v-model="editedSpeaker.short_description"></textarea>
+          <span v-if="errors.short_description" class="text-danger">{{ errors.short_description[0] }}</span>
         </div>
         <div class="form-group">
           <label for="speakerLongDescription">Long Description:</label>
-          <textarea class="form-control" id="speakerLongDescription" v-model="editedSpeaker.long_description" required></textarea>
+          <textarea class="form-control" id="speakerLongDescription" v-model="editedSpeaker.long_description"></textarea>
+          <span v-if="errors.long_description" class="text-danger">{{ errors.long_description[0] }}</span>
         </div>
         <div class="form-group">
           <label for="speakerImage">Image:</label>
           <input type="file" class="form-control" id="speakerImage" @change="onFileChange">
+          <span v-if="errors.image" class="text-danger">{{ errors.image[0] }}</span>
         </div>
         <div class="form-group">
           <label for="speakerInstagram">Instagram:</label>
           <input type="url" class="form-control" id="speakerInstagram" v-model="editedSpeaker.instagram">
+          <span v-if="errors.instagram" class="text-danger">{{ errors.instagram[0] }}</span>
         </div>
         <div class="form-group">
           <label for="speakerYouTube">YouTube:</label>
           <input type="url" class="form-control" id="speakerYouTube" v-model="editedSpeaker.youtube">
+          <span v-if="errors.youtube" class="text-danger">{{ errors.youtube[0] }}</span>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
@@ -53,7 +59,8 @@ export default {
         image: null,
         instagram: '',
         youtube: ''
-      }
+      },
+      errors: {}
     };
   },
   methods: {
@@ -63,32 +70,36 @@ export default {
     async onSubmit() {
       try {
         const formData = new FormData();
-        formData.append('name', this.editedSpeaker.name);
-        formData.append('short_description', this.editedSpeaker.short_description);
-        formData.append('long_description', this.editedSpeaker.long_description);
-        if (this.editedSpeaker.image) {
-          formData.append('image', this.editedSpeaker.image);
-        }
-        formData.append('instagram', this.editedSpeaker.instagram);
-        formData.append('youtube', this.editedSpeaker.youtube);
+        if (this.editedSpeaker.name) formData.append('name', this.editedSpeaker.name);
+        if (this.editedSpeaker.short_description) formData.append('short_description', this.editedSpeaker.short_description);
+        if (this.editedSpeaker.long_description) formData.append('long_description', this.editedSpeaker.long_description);
+        if (this.editedSpeaker.image) formData.append('image', this.editedSpeaker.image);
+        if (this.editedSpeaker.instagram) formData.append('instagram', this.editedSpeaker.instagram);
+        if (this.editedSpeaker.youtube) formData.append('youtube', this.editedSpeaker.youtube);
 
-        const response = await axios.put(`/api/admin/speakers/${this.editedSpeaker.id}`, formData, {
+        const response = await axios.post(`/api/admin/speakers/${this.editedSpeaker.id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
 
         if (response.status === 200) {
-          this.$router.push({ name: 'Home' });
+          alert("Speaker updated successfully");
+          this.$router.push({ name: 'AdminAddSpeaker' });
         }
       } catch (error) {
-        console.error('Error updating speaker:', error);
+        if (error.response && error.response.status === 422) {
+          this.errors = error.response.data.errors;
+        } else {
+          console.error('Error updating speaker:', error);
+        }
       }
     },
     async fetchSpeakerData() {
       try {
         const response = await axios.get(`/api/admin/speakers/${this.$route.params.id}`);
         this.editedSpeaker = response.data;
+        console.log('Fetched speaker data:', this.editedSpeaker); // Log fetched data for debugging
       } catch (error) {
         console.error('Error fetching speaker data:', error);
       }
@@ -102,7 +113,13 @@ export default {
 
 <style scoped>
 /* Add your custom styles here */
+.text-danger {
+  color: red;
+}
 </style>
+
+
+
 
 
 

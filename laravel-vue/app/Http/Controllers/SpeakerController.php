@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Speaker;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class SpeakerController extends Controller
 {
     public function store(Request $request)
     {
         // Validate the request data
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'short_description' => 'required|string',
             'long_description' => 'required|string',
@@ -28,12 +29,12 @@ class SpeakerController extends Controller
 
         // Create a new speaker
         $speaker = Speaker::create([
-            'name' => $request->name,
-            'short_description' => $request->short_description,
-            'long_description' => $request->long_description,
+            'name' => $validatedData['name'],
+            'short_description' => $validatedData['short_description'],
+            'long_description' => $validatedData['long_description'],
             'image' => $imagePath,
-            'instagram' => $request->instagram,
-            'youtube' => $request->youtube,
+            'instagram' => $validatedData['instagram'],
+            'youtube' => $validatedData['youtube'],
         ]);
 
         return response()->json($speaker, 201);
@@ -47,33 +48,42 @@ class SpeakerController extends Controller
 
     public function update(Request $request, Speaker $speaker)
     {
-        // Log the request data for debugging
-        \Log::info('Request data:', $request->all());
+        Log::info('Request data: ', $request->all());
 
-        // Validate the request data
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'short_description' => 'required|string',
-            'long_description' => 'required|string',
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+            'short_description' => 'nullable|string',
+            'long_description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'instagram' => 'nullable|url',
             'youtube' => 'nullable|url',
         ]);
 
-        // Update speaker data
-        $speaker->name = $request->name;
-        $speaker->short_description = $request->short_description;
-        $speaker->long_description = $request->long_description;
-        $speaker->instagram = $request->instagram;
-        $speaker->youtube = $request->youtube;
+        if ($validator->fails()) {
+            Log::error('Validation errors: ', $validator->errors()->toArray());
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
-        // Handle image update
+        if ($request->has('name')) {
+            $speaker->name = $request->name;
+        }
+        if ($request->has('short_description')) {
+            $speaker->short_description = $request->short_description;
+        }
+        if ($request->has('long_description')) {
+            $speaker->long_description = $request->long_description;
+        }
+        if ($request->has('instagram')) {
+            $speaker->instagram = $request->instagram;
+        }
+        if ($request->has('youtube')) {
+            $speaker->youtube = $request->youtube;
+        }
+
         if ($request->hasFile('image')) {
-            // Delete old image if exists
             if ($speaker->image) {
                 Storage::disk('public')->delete($speaker->image);
             }
-            // Store new image
             $imagePath = $request->file('image')->store('images', 'public');
             $speaker->image = $imagePath;
         }
@@ -90,7 +100,6 @@ class SpeakerController extends Controller
 
     public function destroy(Speaker $speaker)
     {
-        // Delete the speaker
         if ($speaker->image) {
             Storage::disk('public')->delete($speaker->image);
         }
@@ -99,6 +108,8 @@ class SpeakerController extends Controller
         return response()->json(null, 204);
     }
 }
+
+
 
 
 

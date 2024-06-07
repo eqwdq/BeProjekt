@@ -28,8 +28,8 @@
         <div class="form-group">
           <label for="speakerYouTube">YouTube:</label>
           <input type="url" class="form-control" id="speakerYouTube" v-model="newSpeaker.youtube">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        </div><br><br>
+        <button type="submit" class="btn btn-primary purple-button">Submit</button>
       </form>
       <br><br><br><br><br><br><br><br>
       <!-- Table to display speakers -->
@@ -58,7 +58,7 @@
             </td>
             <td> <!-- Add a table cell for buttons -->
               <!-- Edit button -->
-              <router-link :to="{ name: 'admin-edit-speaker', params: { id: speaker.id } }" class="btn btn-warning">Edit</router-link>
+              <router-link :to="{ name: 'admin-edit-speaker', params: { id: speaker.id } }" class="btn btn-warning purple-button">Edit</router-link>
 
               <!-- Delete button -->
               <button @click="deleteSpeaker(speaker)" class="btn btn-danger">Delete</button>
@@ -153,6 +153,15 @@ export default {
 
 <style scoped>
 /* Add your custom styles here */
+.purple-button {
+  background-color: rgb(139, 72, 247);
+  border-color: purple;
+}
+
+.purple-button:hover {
+  background-color: rgb(139, 72, 247);
+  border-color: rgb(185, 60, 238);
+}
 </style>
 
 

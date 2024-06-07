@@ -5,6 +5,7 @@ import i18n from './i18n';
 import store from './store/store';
 import axios from 'axios';
 
+
 // Set the base URL for Axios
 axios.defaults.baseURL = 'http://127.0.0.1:8000';
 

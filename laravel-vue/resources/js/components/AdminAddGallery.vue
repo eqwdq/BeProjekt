@@ -19,7 +19,7 @@
           <div v-if="errors.image" class="text-danger">{{ errors.image[0] }}</div>
         </div>
         <br><br><br><br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn purple-button text-white">Submit</button>
       </form>
       <div v-if="errors" class="alert alert-danger">
         <div v-for="(error, field) in errors" :key="field">{{ error[0] }}</div>
@@ -84,6 +84,21 @@ export default {
 .text-danger {
   color: red;
 }
+
+.purple-button {
+  background-color: rgb(139, 72, 247);
+  border-color: purple;
+}
+
+.purple-button:hover {
+  background-color: rgb(139, 72, 247);
+  border-color: rgb(185, 60, 238);
+}
+
+.text-white {
+  color: white;
+}
 </style>
+
 
   
