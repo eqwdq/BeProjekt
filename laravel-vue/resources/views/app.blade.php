@@ -5,30 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Responsive HTML Event Template">
     <meta name="author" content="bestpixels">
-    
+
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="{{ asset('images/ico/favicon.png') }}">
     <link href="{{ asset('images/ico/favicon.ico') }}" rel="shortcut icon" type="image/x-icon">
     <link href="{{ asset('images/ico/favicon.ico') }}" rel="icon" type="image/x-icon">
-    
+
     <!-- Site Title  -->
     <title>nConnect</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
-    
+
     <!-- Magnific Popup CSS -->
     <link rel="stylesheet" href="{{ asset('lib/Magnific-Popup/dist/magnific-popup.css') }}"/>
-    
+
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="{{ asset('lib/Font-Awesome/css/font-awesome.min.css') }}"/>
-    
+
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="{{ asset('lib/select2/css/select2.min.css') }}"/>
-    
+
     <!-- plyr CSS -->
     <link rel="stylesheet" href="{{ asset('lib/plyr/dist/plyr.css') }}"/>
-    
+
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/font.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -48,7 +48,7 @@
 
     <!-- Load your Vue application JavaScript bundle -->
     @vite('resources/js/app.js')
-    
+
     <!-- Bootstrap core JavaScript -->
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
@@ -66,7 +66,7 @@
     <script src="{{ asset('lib/plyr/dist/plyr.js') }}"></script>
 
     <!-- Google Map -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script> -->
 
     <!-- jQuery Custom -->
     <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
