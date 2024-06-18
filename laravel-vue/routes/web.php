@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\ReviewController;
 
 
 Route::get('/{any}', function () {
@@ -33,6 +34,12 @@ Route::get('/api/gallery', [GalleryController::class, 'index']);
 
 Route::post('/admin/sponsors', [SponsorController::class, 'store']);
 Route::get('/api/sponsors', [SponsorController::class, 'index']);
+
+Route::post('/admin/reviews', [ReviewController::class, 'store']);
+Route::get('api/admin/reviews', [ReviewController::class, 'index']);
+Route::get('api/admin/reviews/{review}', [ReviewController::class, 'show']);
+Route::put('api/admin/reviews/{review}', [ReviewController::class, 'update']);
+Route::delete('/admin/reviews/{review}', [ReviewController::class, 'destroy']);
 
 
 

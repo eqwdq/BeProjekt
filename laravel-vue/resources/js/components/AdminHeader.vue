@@ -41,6 +41,7 @@
                 <li :class="{ current: isActive('/admin/programs/add') }"><router-link to="/admin/programs/add">Programs</router-link></li>
                 <li :class="{ current: isActive('/admin/gallery/add') }"><router-link to="/admin/gallery/add">Galleries</router-link></li>
                 <li :class="{ current: isActive('/admin/sponsors/add') }"><router-link to="/admin/sponsors/add">Sponsors</router-link></li>
+                <li :class="{ current: isActive('/admin/review/add') }"><router-link to="/admin/review/add">Reviews</router-link></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container -->

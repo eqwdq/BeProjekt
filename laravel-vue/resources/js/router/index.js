@@ -14,6 +14,8 @@ import AdminEditProgram from '../components/AdminEditProgram.vue';
 import Gallery from '../components/Gallery.vue';
 import AdminAddGallery from '../components/AdminAddGallery.vue';
 import AdminAddSponzor from '../components/AdminAddSponzor.vue';
+import AdminAddReview from '../components/AdminAddReview.vue';
+import AdminEditReview from '../components/AdminEditReview.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -94,7 +96,18 @@ const router = createRouter({
             path: '/admin/sponsors/add',
             name: 'admin-add-sponsor',
             component: AdminAddSponzor
-        }
+        },
+        {
+            path: '/admin/review/add',
+            name: 'admin-add-review',
+            component: AdminAddReview
+          },
+          {
+            path: '/admin/reviews/edit/:id',
+            name: 'admin-edit-review',
+            component: AdminEditReview,
+            props: true
+          },
     ]
 });
 
