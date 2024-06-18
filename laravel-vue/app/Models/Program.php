@@ -10,16 +10,18 @@ class Program extends Model
     use HasFactory;
 
     protected $fillable = [
-        'day', 
-        'time', 
-        'title', 
-        'short_description', 
-        'long_description', 
-        'speaker', 
-        'speaker_link', 
+        'day',
+        'time',
+        'title',
+        'stage', // Add stage
+        'short_description',
+        'long_description',
+        'speaker',
+        'speaker_link',
         'image'
     ];
 }
+
 
 
 

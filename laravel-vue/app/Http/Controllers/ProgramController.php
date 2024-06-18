@@ -12,11 +12,11 @@ class ProgramController extends Controller
 {
     public function store(Request $request)
     {
-        // Validate the request data
         $request->validate([
             'day' => 'required|string|max:255',
             'time' => 'required|string|max:255',
             'title' => 'required|string|max:255',
+            'stage' => 'required|string|max:255', // Validate stage
             'short_description' => 'required|string',
             'long_description' => 'required|string',
             'speaker' => 'required|string|max:255',
@@ -24,17 +24,16 @@ class ProgramController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Handle the image upload
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
         }
 
-        // Create a new program
         $program = Program::create([
             'day' => $request->day,
             'time' => $request->time,
             'title' => $request->title,
+            'stage' => $request->stage, // Save stage
             'short_description' => $request->short_description,
             'long_description' => $request->long_description,
             'speaker' => $request->speaker,
@@ -57,66 +56,66 @@ class ProgramController extends Controller
     }
 
     public function update(Request $request, Program $program)
-{
-    Log::info('Request data: ', $request->all());
+    {
+        Log::info('Request data: ', $request->all());
 
-    $validator = Validator::make($request->all(), [
-        'day' => 'nullable|string|max:255',
-        'time' => 'nullable|string|max:255',
-        'title' => 'nullable|string|max:255',
-        'short_description' => 'nullable|string',
-        'long_description' => 'nullable|string',
-        'speaker' => 'nullable|string|max:255',
-        'speaker_link' => 'nullable|url',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+        $validator = Validator::make($request->all(), [
+            'day' => 'nullable|string|max:255',
+            'time' => 'nullable|string|max:255',
+            'title' => 'nullable|string|max:255',
+            'stage' => 'nullable|string|max:255', // Validate stage
+            'short_description' => 'nullable|string',
+            'long_description' => 'nullable|string',
+            'speaker' => 'nullable|string|max:255',
+            'speaker_link' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    if ($validator->fails()) {
-        Log::error('Validation errors: ', $validator->errors()->toArray());
-        return response()->json(['errors' => $validator->errors()], 422);
-    }
-
-    if ($request->has('day')) {
-        $program->day = $request->day;
-    }
-    if ($request->has('time')) {
-        $program->time = $request->time;
-    }
-    if ($request->has('title')) {
-        $program->title = $request->title;
-    }
-    if ($request->has('short_description')) {
-        $program->short_description = $request->short_description;
-    }
-    if ($request->has('long_description')) {
-        $program->long_description = $request->long_description;
-    }
-    if ($request->has('speaker')) {
-        $program->speaker = $request->speaker;
-    }
-    if ($request->has('speaker_link')) {
-        $program->speaker_link = $request->speaker_link;
-    }
-
-    if ($request->hasFile('image')) {
-        if ($program->image) {
-            Storage::disk('public')->delete($program->image);
+        if ($validator->fails()) {
+            Log::error('Validation errors: ', $validator->errors()->toArray());
+            return response()->json(['errors' => $validator->errors()], 422);
         }
-        $imagePath = $request->file('image')->store('images', 'public');
-        $program->image = $imagePath;
+
+        if ($request->has('day')) {
+            $program->day = $request->day;
+        }
+        if ($request->has('time')) {
+            $program->time = $request->time;
+        }
+        if ($request->has('title')) {
+            $program->title = $request->title;
+        }
+        if ($request->has('stage')) {
+            $program->stage = $request->stage;
+        }
+        if ($request->has('short_description')) {
+            $program->short_description = $request->short_description;
+        }
+        if ($request->has('long_description')) {
+            $program->long_description = $request->long_description;
+        }
+        if ($request->has('speaker')) {
+            $program->speaker = $request->speaker;
+        }
+        if ($request->has('speaker_link')) {
+            $program->speaker_link = $request->speaker_link;
+        }
+
+        if ($request->hasFile('image')) {
+            if ($program->image) {
+                Storage::disk('public')->delete($program->image);
+            }
+            $imagePath = $request->file('image')->store('images', 'public');
+            $program->image = $imagePath;
+        }
+
+        $program->save();
+
+        return response()->json($program);
     }
-
-    $program->save();
-
-    return response()->json($program);
-}
-
-
-
 
     public function destroy(Program $program)
     {
-        // Delete the program
         if ($program->image) {
             Storage::disk('public')->delete($program->image);
         }

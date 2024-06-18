@@ -18,6 +18,10 @@
           <input type="text" class="form-control" id="programTitle" v-model="program.title">
         </div>
         <div class="form-group">
+          <label for="programStage">Stage:</label>
+          <input type="text" class="form-control" id="programStage" v-model="program.stage">
+        </div>
+        <div class="form-group">
           <label for="programShortDescription">Short Description:</label>
           <textarea class="form-control" id="programShortDescription" v-model="program.short_description"></textarea>
         </div>
@@ -65,6 +69,7 @@ export default {
         day: '',
         time: '',
         title: '',
+        stage: '', // Add stage
         short_description: '',
         long_description: '',
         speaker: '',
@@ -103,6 +108,7 @@ export default {
         formData.append('day', this.program.day);
         formData.append('time', this.program.time);
         formData.append('title', this.program.title);
+        formData.append('stage', this.program.stage); // Append stage
         formData.append('short_description', this.program.short_description);
         formData.append('long_description', this.program.long_description);
         formData.append('speaker', this.program.speaker);
@@ -134,6 +140,7 @@ export default {
         if (this.program.day) formData.append('day', this.program.day);
         if (this.program.time) formData.append('time', this.program.time);
         if (this.program.title) formData.append('title', this.program.title);
+        if (this.program.stage) formData.append('stage', this.program.stage); // Append stage
         if (this.program.short_description) formData.append('short_description', this.program.short_description);
         if (this.program.long_description) formData.append('long_description', this.program.long_description);
         if (this.program.speaker) formData.append('speaker', this.program.speaker);
@@ -172,6 +179,7 @@ export default {
   color: red;
 }
 </style>
+
 
 
 

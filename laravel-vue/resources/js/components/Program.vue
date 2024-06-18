@@ -35,8 +35,9 @@
                       @click="setActiveTab(index + 1)"
                     >
                       <a href="#">
-                        <h4>{{ schedule.day }}</h4>
-                        <h5>{{ schedule.sessions[0].title }}</h5>
+                        <h4>{{ schedule.sessions[0].title }}</h4>
+                        <h5>{{ schedule.day }}</h5>
+                  
                       </a>
                     </li>
                   </ul>
@@ -50,7 +51,7 @@
                         <h5>Time</h5>
                       </div>
                       <div class="col-sm-9 no-padding">
-                        <h5>SESSION TITLE</h5>
+                        <h5>STAGE</h5>
                       </div>
                     </div>
                   </div>
@@ -74,7 +75,7 @@
                                     <h5>{{ session.time }}</h5>
                                   </div>
                                   <div class="col-sm-9 no-padding">
-                                    <h5>{{ session.title }}</h5>
+                                    <h5>{{ session.stage }}</h5>
                                   </div>
                                 </div>
                               </a>
@@ -200,6 +201,7 @@ export default {
 <style scoped>
 /* Add your custom styles here */
 </style>
+
 
 
 
