@@ -62,10 +62,3 @@ class UserRegistrationController extends Controller
     }
 }
 
-
-
-
-
-
-
-
