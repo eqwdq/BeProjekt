@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SponsorController;
+use Illuminate\Support\Facades\Mail;
 
 
 Route::get('/{any}', function () {
@@ -36,3 +37,12 @@ Route::get('/api/gallery', [GalleryController::class, 'index']);
 
 Route::post('/admin/sponsors', [SponsorController::class, 'store']);
 Route::get('/api/sponsors', [SponsorController::class, 'index']);
+
+Route::get('/send-test-email', function () {
+    Mail::raw('This is a test email from Mailtrap!', function ($message) {
+        $message->to('danielf0804@gmail.com')
+                ->subject('Test Email');
+    });
+
+    return 'Test email sent!';
+});
