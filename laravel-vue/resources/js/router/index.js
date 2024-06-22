@@ -16,9 +16,12 @@ import AdminAddGallery from '../components/AdminAddGallery.vue';
 import AdminAddSponzor from '../components/AdminAddSponzor.vue';
 import AdminAddReview from '../components/AdminAddReview.vue';
 import AdminEditReview from '../components/AdminEditReview.vue';
+<<<<<<< HEAD
 import AdminPageEditor from '../components/AdminPageEditor.vue'; // Import the AdminPageEditor component
 import PageViewer from '../components/PageViewer.vue'; // Import the PageViewer component for viewing pages
 
+=======
+>>>>>>> 9f2fcc12450a4cd0fc08cde55b637ef5ec068678
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -111,6 +114,7 @@ const router = createRouter({
             component: AdminEditReview,
             props: true
           },
+<<<<<<< HEAD
           {
             path: '/admin/pages/add',
             name: 'admin-add-page',
@@ -128,6 +132,8 @@ const router = createRouter({
             component: PageViewer,
             props: true
           },
+=======
+>>>>>>> 9f2fcc12450a4cd0fc08cde55b637ef5ec068678
     ]
 });
 

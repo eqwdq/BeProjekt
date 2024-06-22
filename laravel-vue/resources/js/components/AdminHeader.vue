@@ -42,7 +42,10 @@
                 <li :class="{ current: isActive('/admin/gallery/add') }"><router-link to="/admin/gallery/add">Galleries</router-link></li>
                 <li :class="{ current: isActive('/admin/sponsors/add') }"><router-link to="/admin/sponsors/add">Sponsors</router-link></li>
                 <li :class="{ current: isActive('/admin/review/add') }"><router-link to="/admin/review/add">Reviews</router-link></li>
+<<<<<<< HEAD
                 <li :class="{ current: isActive('/admin/pages/add') }"><router-link to="/admin/pages/add">Page</router-link></li>
+=======
+>>>>>>> 9f2fcc12450a4cd0fc08cde55b637ef5ec068678
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container -->
