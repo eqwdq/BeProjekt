@@ -1,71 +1,67 @@
 <template>
-    <div>
-      <div class="navigation-area primary-shadow">
-        <div class="top-info-bar">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="contact-info-bar">
-                  <ul>
-                    <li><i class="fa fa-map-marker"></i> Študentské centrum UKF, Dražovská 2, Nitra</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-sm-6 text-right mobile-left">
-                <div class="contact-info-bar">
-                  <ul>
-                    <li><i class="fa fa-phone"></i> +421 902 170 744</li>
-                    <li><i class="fa fa-envelope"></i> info@nconnect.sk</li>
-                  </ul>
-                </div>
+  <div>
+    <div class="navigation-area primary-shadow">
+      <div class="top-info-bar">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="contact-info-bar">
+                <ul>
+                  <li><i class="fa fa-map-marker"></i> Študentské centrum UKF, Dražovská 2, Nitra</li>
+                </ul>
               </div>
             </div>
-          </div><!-- /.container -->
-        </div><!-- /.top-info-bar -->
-  
-        <nav class="navbar navbar-default">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              
+            <div class="col-sm-6 text-right mobile-left">
+              <div class="contact-info-bar">
+                <ul>
+                  <li><i class="fa fa-phone"></i> +421 902 170 744</li>
+                  <li><i class="fa fa-envelope"></i> info@nconnect.sk</li>
+                </ul>
+              </div>
             </div>
-  
-            <div class="collapse navbar-collapse" id="navbar-collapse">
-              <ul class="nav navbar-nav navbar-right">
-                <li :class="{ current: isActive('/admin/addspeaker') }"><router-link to="/admin/addspeaker">Speakers</router-link></li>
-                <li :class="{ current: isActive('/admin/programs/add') }"><router-link to="/admin/programs/add">Programs</router-link></li>
-                <li :class="{ current: isActive('/admin/gallery/add') }"><router-link to="/admin/gallery/add">Galleries</router-link></li>
-                <li :class="{ current: isActive('/admin/sponsors/add') }"><router-link to="/admin/sponsors/add">Sponsors</router-link></li>
-                <li :class="{ current: isActive('/admin/review/add') }"><router-link to="/admin/review/add">Reviews</router-link></li>
-<<<<<<< HEAD
-                <li :class="{ current: isActive('/admin/pages/add') }"><router-link to="/admin/pages/add">Page</router-link></li>
-=======
->>>>>>> 9f2fcc12450a4cd0fc08cde55b637ef5ec068678
-              </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container -->
-        </nav>
-      </div><!-- /.navigation-area -->
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'AdminHeader',
-    methods: {
-      isActive(path) {
-        return this.$route.path === path;
-      }
+          </div>
+        </div><!-- /.container -->
+      </div><!-- /.top-info-bar -->
+
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+
+          <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li :class="{ current: isActive('/admin/addspeaker') }"><router-link to="/admin/addspeaker">Speakers</router-link></li>
+              <li :class="{ current: isActive('/admin/programs/add') }"><router-link to="/admin/programs/add">Programs</router-link></li>
+              <li :class="{ current: isActive('/admin/gallery/add') }"><router-link to="/admin/gallery/add">Galleries</router-link></li>
+              <li :class="{ current: isActive('/admin/sponsors/add') }"><router-link to="/admin/sponsors/add">Sponsors</router-link></li>
+              <li :class="{ current: isActive('/admin/review/add') }"><router-link to="/admin/review/add">Reviews</router-link></li>
+              <li :class="{ current: isActive('/admin/pages/add') }"><router-link to="/admin/pages/add">Page</router-link></li>
+              <li :class="{ current: isActive('/admin/registered') }"><router-link to="/admin/registered">Registered People</router-link></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+      </nav>
+    </div><!-- /.navigation-area -->
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'AdminHeader',
+  methods: {
+    isActive(path) {
+      return this.$route.path === path;
     }
-  };
-  </script>
-  
-  <style scoped>
-  /* Add your custom styles here */
-  </style>
-  
+  }
+};
+</script>
+
+<style scoped>
+/* Add your custom styles here */
+</style>

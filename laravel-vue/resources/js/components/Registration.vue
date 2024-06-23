@@ -1,126 +1,140 @@
-<<<<<<< HEAD
-//resources/js/components/Registration.vue
-
 <template>
   <div>
-      <Header />
-  
-  <Footer />
-</div>
+    <Header />
+    <div class="container">
+      <br><br><br><br><br><br><br><br>
+      <h3>Zaregistrujte sa na prednášku</h3>
+      <br><br><br><br><br>
+      <form @submit.prevent="register">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="name" v-model="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" v-model="email" required />
+        </div>
+        <div class="form-group">
+          <label for="program">Select Program:</label>
+          <select class="form-control" id="program" v-model="selectedProgram" required>
+            <option v-for="program in programs" :key="program.id" :value="program.id">
+              {{ program.title }} - {{ program.day }} {{ program.time }}
+            </option>
+          </select>
+        </div>
+        <div v-if="errors.length" class="alert alert-danger">
+          <ul>
+            <li v-for="error in errors" :key="error">{{ error }}</li>
+          </ul>
+        </div>
+        <br><br><br><br>
+        <button type="submit" class="btn btn-primary purple-button">Register</button>
+      </form>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      
+      <h3>Už ste zaregistovaný?</h3>
+      <br><br><br><br><br>
+      <form @submit.prevent="fetchUserRegistrations">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" v-model="userEmail" required />
+        </div>
+        <br><br><br><br>
+        <button type="submit" class="btn btn-primary purple-button">Check Registrations</button>
+      </form>
+      <br><br><br><br>
+      <div v-if="userRegistrations.length > 0">
+        <h4>Your Registrations:</h4>
+        <ul>
+          <li v-for="registration in userRegistrations" :key="registration.id">
+            {{ registration.program.title }} - {{ registration.program.day }} {{ registration.program.time }}
+            <button @click="unregister(registration.id)" class="btn btn-danger">Unregister</button>
+          </li>
+        </ul>
+      </div>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+    <Footer />
+  </div>
 </template>
 
 <script>
 import Header from './Header.vue';
 import Footer from './Footer.vue';
+import axios from 'axios';
 
 export default {
   components: {
     Header,
-    Footer
+    Footer,
   },
-=======
-<template>
-  <br><br><br><br><br><br><br><br><br><br><br>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-10"> <!-- Adjusted column width to make fields longer -->
-        <div class="card">
-          <div class="card-header text-center">{{ $t('Register') }}</div>
-
-          <div class="card-body">
-            <form @submit.prevent="register">
-              <br><br><br><br><br>
-              <div class="form-group row">
-                <label for="name" class="col-md-3 col-form-label text-md-right">{{ $t('name') }}</label> <!-- Adjusted column width -->
-                <div class="col-md-8"> <!-- Adjusted column width -->
-                  <input v-model="name" id="name" type="text" class="form-control" required autofocus>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="email" class="col-md-3 col-form-label text-md-right">{{ $t('email') }}</label> <!-- Adjusted column width -->
-                <div class="col-md-8"> <!-- Adjusted column width -->
-                  <input v-model="email" id="email" type="email" class="form-control" required>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="password" class="col-md-3 col-form-label text-md-right">{{ $t('password') }}</label> <!-- Adjusted column width -->
-                <div class="col-md-8"> <!-- Adjusted column width -->
-                  <input v-model="password" id="password" type="password" class="form-control" required>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="password-confirm" class="col-md-3 col-form-label text-md-right">{{ $t('confirmPassword') }}</label> <!-- Adjusted column width -->
-                <div class="col-md-8"> <!-- Adjusted column width -->
-                  <input v-model="passwordConfirm" id="password-confirm" type="password" class="form-control" required>
-                </div>
-              </div>
-              <br><br><br>
-              <div class="form-group row mb-0">
-                <div class="col-md-8 offset-md-3 text-center"> <!-- Adjusted column width and offset -->
-                  <button type="submit" class="btn btn-primary purple-button">{{ $t('register') }}</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
->>>>>>> 9f2fcc12450a4cd0fc08cde55b637ef5ec068678
   data() {
     return {
       name: '',
       email: '',
-      password: '',
-      passwordConfirm: ''
+      selectedProgram: '',
+      programs: [],
+      errors: [], // Array to store validation errors
+      userEmail: '', // Email for checking registrations
+      userRegistrations: [] // Array to store user registrations
     };
   },
   methods: {
-    register() {
-<<<<<<< HEAD
-      // Your registration logic goes here
-=======
-      axios.post('/registracia', {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        password_confirmation: this.passwordConfirm
-      })
-      .then(response => {
-        alert('Sent you a email!');
-        this.$router.push({ name: 'home' });  // Navigate to home
-      })
-      .catch(error => {
-        console.error(error);
+    async fetchPrograms() {
+      try {
+        const response = await axios.get('/api/admin/programs');
+        this.programs = response.data;
+      } catch (error) {
+        console.error('Error fetching programs:', error);
+      }
+    },
+    async register() {
+      try {
+        this.errors = []; // Clear previous errors
+        const response = await axios.post('/api/register', {
+          name: this.name,
+          email: this.email,
+          program_id: this.selectedProgram,
+        });
+        alert('Registration successful! Please check your email for confirmation.');
+      } catch (error) {
+        console.error('Error registering:', error);
         if (error.response && error.response.data.errors) {
-          alert(JSON.stringify(error.response.data.errors));
+          // Capture validation errors
+          this.errors = Object.values(error.response.data.errors).flat();
         } else {
-          alert(error);
+          alert('There was an error with your registration. Please try again.');
         }
-      });
->>>>>>> 9f2fcc12450a4cd0fc08cde55b637ef5ec068678
+      }
+    },
+    async fetchUserRegistrations() {
+      try {
+        const response = await axios.post('/api/user-registrations', {
+          email: this.userEmail,
+        });
+        this.userRegistrations = response.data;
+      } catch (error) {
+        console.error('Error fetching user registrations:', error);
+      }
+    },
+    async unregister(registrationId) {
+      try {
+        await axios.delete(`/api/unregister/${registrationId}`);
+        this.userRegistrations = this.userRegistrations.filter(r => r.id !== registrationId);
+        alert('Successfully unregistered.');
+      } catch (error) {
+        console.error('Error unregistering:', error);
+        alert('There was an error while trying to unregister. Please try again.');
+      }
     }
-  }
+  },
+  created() {
+    this.fetchPrograms();
+  },
 };
 </script>
 
 <style scoped>
-/* Add your custom styles here */
-<<<<<<< HEAD
-</style>
-
-  
-  
-=======
 .purple-button {
   background-color: rgb(139, 72, 247);
   border-color: purple;
@@ -130,28 +144,4 @@ export default {
   background-color: rgb(139, 72, 247);
   border-color: rgb(185, 60, 238);
 }
-
-.text-center {
-  text-align: center;
-}
-
-.container {
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-}
-
-.btn-primary {
-  background-color: rgb(139, 72, 247);
-  border-color: purple;
-}
-
-.btn-primary:hover {
-  background-color: rgb(139, 72, 247);
-  border-color: rgb(185, 60, 238);
-}
 </style>
-
-
-
->>>>>>> 9f2fcc12450a4cd0fc08cde55b637ef5ec068678

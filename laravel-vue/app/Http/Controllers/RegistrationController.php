@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registration;
+use App\Models\Program;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ProgramRegistration;
 
 class RegistrationController extends Controller
 {
@@ -29,7 +32,7 @@ class RegistrationController extends Controller
         $program = Program::find($request->program_id);
 
         // Send the confirmation email
-        \Mail::to($request->email)->send(new \App\Mail\ProgramRegistration($registration, $program));
+        Mail::to($request->email)->send(new ProgramRegistration($registration, $program));
 
         return response()->json(['message' => 'Registration successful!'], 201);
     }
@@ -38,5 +41,25 @@ class RegistrationController extends Controller
     {
         $registrations = Registration::with('program')->get();
         return response()->json($registrations);
+    }
+
+    public function userRegistrations(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|string|email|max:255',
+        ]);
+
+        $registrations = Registration::where('email', $validated['email'])
+                                     ->with('program')
+                                     ->get();
+        return response()->json($registrations);
+    }
+
+    public function unregister($id)
+    {
+        $registration = Registration::findOrFail($id);
+        $registration->delete();
+
+        return response()->json(['message' => 'Unregistered successfully.'], 200);
     }
 }
