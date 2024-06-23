@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
+use App\Models\User; // Import modelu User
+use Illuminate\Http\Request; // Import Request triedy pre získanie údajov z požiadaviek
+use Illuminate\Support\Facades\Hash; // Import Hash triedy pre hashovanie hesiel
+use Illuminate\Support\Facades\Validator; // Import Validator triedy pre validáciu vstupov
+use Illuminate\Support\Facades\Log; // Import Log triedy pre zapisovanie logov
 
 class AdminRegistrationController extends Controller
 {
