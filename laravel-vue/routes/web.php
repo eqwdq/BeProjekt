@@ -32,9 +32,9 @@ Route::get('/api/admin/speakers/{speaker}', [SpeakerController::class, 'show']);
 
 Route::get('/api/admin/programs', [ProgramController::class, 'index']);
 Route::get('/api/admin/programs/{program}', [ProgramController::class, 'show']);
-Route::post('/admin/programs', [ProgramController::class, 'store']);
+Route::post('api/admin/programs', [ProgramController::class, 'store']);
 Route::put('/api/admin/programs/{program}', [ProgramController::class, 'update']);
-Route::delete('/admin/programs/{program}', [ProgramController::class, 'destroy']);
+Route::delete('api/admin/programs/{program}', [ProgramController::class, 'destroy']);
 
 Route::post('/admin/gallery', [GalleryController::class, 'store']);
 Route::get('/api/gallery', [GalleryController::class, 'index']);
@@ -63,7 +63,7 @@ Route::get('/test-email', function () {
     $registration = Registration::first();
     $program = Program::first();
 
-    Mail::to('klaudika.sz362@gmail.com')->send(new ProgramRegistration($registration, $program));
+    Mail::to('klaudika.sz362@gmail.com')-send(new App\Mail\ProgramRegistration($registration, $program));
 
     return 'Email Sent';
 });

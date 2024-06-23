@@ -22,6 +22,10 @@
           <input type="text" class="form-control" id="programStage" v-model="newProgram.stage" required>
         </div>
         <div class="form-group">
+          <label for="programCapacity">Capacity:</label>
+          <input type="number" class="form-control" id="programCapacity" v-model="newProgram.capacity" required>
+        </div>
+        <div class="form-group">
           <label for="programShortDescription">Short Description:</label>
           <textarea class="form-control" id="programShortDescription" v-model="newProgram.short_description" required></textarea>
         </div>
@@ -53,6 +57,7 @@
             <th>Time</th>
             <th>Title</th>
             <th>Stage</th>
+            <th>Capacity</th>
             <th>Short Description</th>
             <th>Long Description</th>
             <th>Speaker</th>
@@ -67,6 +72,7 @@
             <td>{{ program.time }}</td>
             <td>{{ program.title }}</td>
             <td>{{ program.stage }}</td>
+            <td>{{ program.capacity }}</td> <!-- Display capacity -->
             <td>{{ program.short_description }}</td>
             <td>{{ program.long_description }}</td>
             <td>{{ program.speaker }}</td>
@@ -99,7 +105,8 @@ export default {
         day: '',
         time: '',
         title: '',
-        stage: '', // Add stage
+        stage: '',
+        capacity: '', // Add capacity
         short_description: '',
         long_description: '',
         speaker: '',
@@ -118,7 +125,8 @@ export default {
       formData.append('day', this.newProgram.day);
       formData.append('time', this.newProgram.time);
       formData.append('title', this.newProgram.title);
-      formData.append('stage', this.newProgram.stage); // Append stage
+      formData.append('stage', this.newProgram.stage);
+      formData.append('capacity', this.newProgram.capacity);
       formData.append('short_description', this.newProgram.short_description);
       formData.append('long_description', this.newProgram.long_description);
       formData.append('speaker', this.newProgram.speaker);
@@ -126,19 +134,20 @@ export default {
       formData.append('image', this.newProgram.image);
 
       try {
-        await axios.post('/admin/programs', formData);
+        await axios.post('/api/admin/programs', formData);
         this.newProgram = {
           day: '',
           time: '',
           title: '',
-          stage: '', // Reset stage
+          stage: '',
+          capacity: '',
           short_description: '',
           long_description: '',
           speaker: '',
           speaker_link: '',
           image: null
         };
-        this.fetchPrograms(); // Fetch updated list after submission
+        this.fetchPrograms();
       } catch (error) {
         console.error('Error adding program:', error);
       }
@@ -146,8 +155,8 @@ export default {
     async deleteProgram(program) {
       if (confirm("Are you sure you want to delete this program?")) {
         try {
-          await axios.delete(`/admin/programs/${program.id}`);
-          this.fetchPrograms(); // Fetch updated list after deletion
+          await axios.delete(`/api/admin/programs/${program.id}`);
+          this.fetchPrograms();
         } catch (error) {
           console.error('Error deleting program:', error);
         }
@@ -163,13 +172,12 @@ export default {
     }
   },
   created() {
-    this.fetchPrograms(); // Fetch programs when component is created
+    this.fetchPrograms();
   }
 };
 </script>
 
 <style scoped>
-/* Add your custom styles here */
 .purple-button {
   background-color: rgb(139, 72, 247);
   border-color: purple;
@@ -180,15 +188,3 @@ export default {
   border-color: rgb(185, 60, 238);
 }
 </style>
-
-
-
-
-  
-  
-  
-  
-  
-  
-  
-  

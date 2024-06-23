@@ -22,6 +22,10 @@
           <input type="text" class="form-control" id="programStage" v-model="program.stage">
         </div>
         <div class="form-group">
+          <label for="programCapacity">Capacity:</label>
+          <input type="number" class="form-control" id="programCapacity" v-model="program.capacity">
+        </div>
+        <div class="form-group">
           <label for="programShortDescription">Short Description:</label>
           <textarea class="form-control" id="programShortDescription" v-model="program.short_description"></textarea>
         </div>
@@ -42,7 +46,7 @@
           <input type="file" class="form-control" id="programImage" @change="onFileChange">
         </div>
         <br><br><br><br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary purple-button">Save</button>
       </form>
       <div v-if="errors.length">
         <h4>Validation Errors:</h4>
@@ -69,7 +73,8 @@ export default {
         day: '',
         time: '',
         title: '',
-        stage: '', // Add stage
+        stage: '',
+        capacity: '', // Add capacity
         short_description: '',
         long_description: '',
         speaker: '',
@@ -96,43 +101,6 @@ export default {
       this.program.image = e.target.files[0];
     },
     async save() {
-      if (this.program.id == null) {
-        await this.saveData();
-      } else {
-        await this.updateData();
-      }
-    },
-    async saveData() {
-      try {
-        const formData = new FormData();
-        formData.append('day', this.program.day);
-        formData.append('time', this.program.time);
-        formData.append('title', this.program.title);
-        formData.append('stage', this.program.stage); // Append stage
-        formData.append('short_description', this.program.short_description);
-        formData.append('long_description', this.program.long_description);
-        formData.append('speaker', this.program.speaker);
-        formData.append('speaker_link', this.program.speaker_link);
-        if (this.program.image) {
-          formData.append('image', this.program.image);
-        }
-
-        // Log the FormData content
-        for (let [key, value] of formData.entries()) {
-          console.log(`${key}: ${value}`);
-        }
-
-        await axios.post('/api/admin/programs', formData);
-        alert("Program saved successfully");
-        this.$router.push({ name: 'AdminAddProgram' });
-      } catch (error) {
-        console.error('Error saving program:', error);
-        if (error.response && error.response.data.errors) {
-          this.errors = Object.values(error.response.data.errors).flat();
-        }
-      }
-    },
-    async updateData() {
       try {
         const formData = new FormData();
         formData.append('_method', 'PUT'); // Include the PUT method for Laravel
@@ -140,17 +108,13 @@ export default {
         if (this.program.day) formData.append('day', this.program.day);
         if (this.program.time) formData.append('time', this.program.time);
         if (this.program.title) formData.append('title', this.program.title);
-        if (this.program.stage) formData.append('stage', this.program.stage); // Append stage
+        if (this.program.stage) formData.append('stage', this.program.stage);
+        if (this.program.capacity) formData.append('capacity', this.program.capacity);
         if (this.program.short_description) formData.append('short_description', this.program.short_description);
         if (this.program.long_description) formData.append('long_description', this.program.long_description);
         if (this.program.speaker) formData.append('speaker', this.program.speaker);
         if (this.program.speaker_link) formData.append('speaker_link', this.program.speaker_link);
         if (this.program.image) formData.append('image', this.program.image);
-
-        // Log the FormData content
-        for (let [key, value] of formData.entries()) {
-          console.log(`${key}: ${value}`);
-        }
 
         const response = await axios.post(`/api/admin/programs/${this.program.id}`, formData, {
           headers: {
@@ -174,23 +138,13 @@ export default {
 </script>
 
 <style scoped>
-/* Add your custom styles here */
-.text-danger {
-  color: red;
+.purple-button {
+  background-color: rgb(139, 72, 247);
+  border-color: purple;
+}
+
+.purple-button:hover {
+  background-color: rgb(139, 72, 247);
+  border-color: rgb(185, 60, 238);
 }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-  

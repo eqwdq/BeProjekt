@@ -27,4 +27,3 @@ class ProgramRegistration extends Mailable
                     ->view('emails.program_registration');
     }
 }
-

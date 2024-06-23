@@ -16,12 +16,13 @@ class ProgramController extends Controller
             'day' => 'required|string|max:255',
             'time' => 'required|string|max:255',
             'title' => 'required|string|max:255',
-            'stage' => 'required|string|max:255', // Validate stage
+            'stage' => 'required|string|max:255', 
             'short_description' => 'required|string',
             'long_description' => 'required|string',
             'speaker' => 'required|string|max:255',
             'speaker_link' => 'nullable|url',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'capacity' => 'required|integer|min:1', // Add validation for capacity
         ]);
 
         $imagePath = null;
@@ -33,12 +34,13 @@ class ProgramController extends Controller
             'day' => $request->day,
             'time' => $request->time,
             'title' => $request->title,
-            'stage' => $request->stage, // Save stage
+            'stage' => $request->stage, 
             'short_description' => $request->short_description,
             'long_description' => $request->long_description,
             'speaker' => $request->speaker,
             'speaker_link' => $request->speaker_link,
             'image' => $imagePath,
+            'capacity' => $request->capacity, // Save capacity
         ]);
 
         return response()->json($program, 201);
@@ -63,12 +65,13 @@ class ProgramController extends Controller
             'day' => 'nullable|string|max:255',
             'time' => 'nullable|string|max:255',
             'title' => 'nullable|string|max:255',
-            'stage' => 'nullable|string|max:255', // Validate stage
+            'stage' => 'nullable|string|max:255', 
             'short_description' => 'nullable|string',
             'long_description' => 'nullable|string',
             'speaker' => 'nullable|string|max:255',
             'speaker_link' => 'nullable|url',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'capacity' => 'nullable|integer|min:1', // Add validation for capacity
         ]);
 
         if ($validator->fails()) {
@@ -100,6 +103,9 @@ class ProgramController extends Controller
         if ($request->has('speaker_link')) {
             $program->speaker_link = $request->speaker_link;
         }
+        if ($request->has('capacity')) {
+            $program->capacity = $request->capacity;
+        }
 
         if ($request->hasFile('image')) {
             if ($program->image) {
@@ -124,6 +130,7 @@ class ProgramController extends Controller
         return response()->json(null, 204);
     }
 }
+
 
 
 

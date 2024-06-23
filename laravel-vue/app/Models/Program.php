@@ -13,14 +13,16 @@ class Program extends Model
         'day',
         'time',
         'title',
-        'stage', // Add stage
+        'stage', 
         'short_description',
         'long_description',
         'speaker',
         'speaker_link',
-        'image'
+        'image',
+        'capacity' 
     ];
 }
+
 
 
 

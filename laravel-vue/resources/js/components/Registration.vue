@@ -2,6 +2,7 @@
   <div>
     <Header />
     <div class="container">
+      <!-- Registration form -->
       <br><br><br><br><br><br><br><br>
       <h3>Zaregistrujte sa na prednášku</h3>
       <br><br><br><br><br>
@@ -18,7 +19,7 @@
           <label for="program">Select Program:</label>
           <select class="form-control" id="program" v-model="selectedProgram" required>
             <option v-for="program in programs" :key="program.id" :value="program.id">
-              {{ program.title }} - {{ program.day }} {{ program.time }}
+              {{ program.title }} - {{ program.day }} {{ program.time }} (Capacity: {{ program.capacity }})
             </option>
           </select>
         </div>
@@ -31,13 +32,14 @@
         <button type="submit" class="btn btn-primary purple-button">Register</button>
       </form>
       <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-      
+
+      <!-- Check user registrations -->
       <h3>Už ste zaregistovaný?</h3>
       <br><br><br><br><br>
       <form @submit.prevent="fetchUserRegistrations">
         <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" class="form-control" id="email" v-model="userEmail" required />
+          <label for="user-email">Email:</label>
+          <input type="email" class="form-control" id="user-email" v-model="userEmail" required />
         </div>
         <br><br><br><br>
         <button type="submit" class="btn btn-primary purple-button">Check Registrations</button>
@@ -84,6 +86,7 @@ export default {
       try {
         const response = await axios.get('/api/admin/programs');
         this.programs = response.data;
+        console.log('Programs fetched:', this.programs); // Debugging line
       } catch (error) {
         console.error('Error fetching programs:', error);
       }
@@ -91,6 +94,8 @@ export default {
     async register() {
       try {
         this.errors = []; // Clear previous errors
+        console.log('Selected Program ID:', this.selectedProgram); // Debugging line
+        console.log('Selected Program:', this.programs.find(p => p.id === this.selectedProgram)); // Debugging line
         const response = await axios.post('/api/register', {
           name: this.name,
           email: this.email,
